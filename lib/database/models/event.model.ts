@@ -1,3 +1,4 @@
+import { User } from "lucide-react";
 import { Document, Schema, model, models } from "mongoose";
 
 export interface IEvent extends Document {
