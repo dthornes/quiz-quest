@@ -11,9 +11,7 @@ export const createCategory = async ({
 	try {
 		await connectToDatabase();
 
-		const newCategory = await Category.create({
-			name: categoryName,
-		});
+		const newCategory = await Category.create({ name: categoryName });
 
 		return JSON.parse(JSON.stringify(newCategory));
 	} catch (error) {
