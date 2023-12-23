@@ -1,5 +1,6 @@
 import {
 	Sheet,
+	SheetClose,
 	SheetContent,
 	SheetDescription,
 	SheetHeader,
@@ -31,7 +32,9 @@ const MobileNav = () => {
 						height={38}
 					/>
 					<Separator className="border border-gray-50" />
-					<NavItems />
+					<SheetClose>
+						<NavItems />
+					</SheetClose>
 				</SheetContent>
 			</Sheet>
 		</nav>
