@@ -16,9 +16,9 @@ import {
 	AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
-import { deleteEvent } from "@/lib/actions/quiz.actions";
+import { deleteQuiz } from "@/lib/actions/quiz.actions";
 
-export const DeleteConfirmation = ({ eventId }: { eventId: string }) => {
+export const DeleteConfirmation = ({ quizId }: { quizId: string }) => {
 	const pathname = usePathname();
 	let [isPending, startTransition] = useTransition();
 
@@ -37,7 +37,7 @@ export const DeleteConfirmation = ({ eventId }: { eventId: string }) => {
 				<AlertDialogHeader>
 					<AlertDialogTitle>Are you sure you want to delete?</AlertDialogTitle>
 					<AlertDialogDescription className="p-regular-16 text-grey-600">
-						This will permanently delete this event
+						This will permanently delete this quiz
 					</AlertDialogDescription>
 				</AlertDialogHeader>
 
@@ -47,7 +47,7 @@ export const DeleteConfirmation = ({ eventId }: { eventId: string }) => {
 					<AlertDialogAction
 						onClick={() =>
 							startTransition(async () => {
-								await deleteEvent({ eventId, path: pathname });
+								await deleteQuiz({ quizId, path: pathname });
 							})
 						}
 					>

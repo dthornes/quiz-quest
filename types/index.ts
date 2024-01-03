@@ -15,37 +15,32 @@ export type UpdateUserParams = {
 	photo: string;
 };
 
-// ====== EVENT PARAMS
+// ====== QUIZ PARAMS
 export type CreateQuizParams = {
 	userId: string;
 	quiz: {
 		title: string;
 		description: string;
 		imageUrl: string;
+		categoryId: string;
 	};
 	path: string;
 };
 
-export type UpdateEventParams = {
+export type UpdateQuizParams = {
 	userId: string;
-	event: {
+	quiz: {
 		_id: string;
 		title: string;
-		imageUrl: string;
 		description: string;
-		location: string;
-		startDateTime: Date;
-		endDateTime: Date;
+		imageUrl: string;
 		categoryId: string;
-		price: string;
-		isFree: boolean;
-		url: string;
 	};
 	path: string;
 };
 
-export type DeleteEventParams = {
-	eventId: string;
+export type DeleteQuizParams = {
+	quizId: string;
 	path: string;
 };
 
@@ -56,7 +51,7 @@ export type GetAllEventsParams = {
 	page: number;
 };
 
-export type GetEventsByUserParams = {
+export type GetQuizzesByUserParams = {
 	userId: string;
 	limit?: number;
 	page: number;

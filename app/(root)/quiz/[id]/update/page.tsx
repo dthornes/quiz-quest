@@ -1,4 +1,4 @@
-import EventForm from "@/components/shared/EventForm";
+import QuizForm from "@/components/shared/QuizForm";
 import { getQuizById } from "@/lib/actions/quiz.actions";
 import { auth } from "@clerk/nextjs";
 
@@ -23,12 +23,7 @@ const UpdateEvent = async ({ params: { id } }: UpdateEventProps) => {
 			</section>
 
 			<div className="wrapper my-8">
-				<EventForm
-					type="Update"
-					event={quiz}
-					eventId={quiz._id}
-					userId={userId}
-				/>
+				<QuizForm type="Update" quiz={quiz} quizId={quiz._id} userId={userId} />
 			</div>
 		</>
 	);

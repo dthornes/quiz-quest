@@ -9,11 +9,10 @@ import Category from "@/lib/database/models/category.model";
 
 import {
 	CreateQuizParams,
-	UpdateEventParams,
-	DeleteEventParams,
 	GetAllEventsParams,
-	GetEventsByUserParams,
-	GetRelatedEventsByCategoryParams,
+	UpdateQuizParams,
+	DeleteQuizParams,
+	GetQuizzesByUserParams,
 } from "@/types";
 
 const getCategoryByName = async (name: string) => {
@@ -47,45 +46,41 @@ export async function createQuiz({ userId, quiz, path }: CreateQuizParams) {
 	return JSON.parse(JSON.stringify(newQuiz));
 }
 
-// GET ONE EVENT BY ID
-export async function getQuizById(eventId: string) {
+export async function getQuizById(quizId: string) {
 	await connectToDatabase();
 
-	const event = await populateEvent(Quiz.findById(eventId));
+	const quiz = await populateEvent(Quiz.findById(quizId));
 
-	if (!event) throw new Error("Quiz not found");
+	if (!quiz) throw new Error("Quiz not found");
 
-	return JSON.parse(JSON.stringify(event));
+	return JSON.parse(JSON.stringify(quiz));
 }
 
-// UPDATE
-export async function updateEvent({ userId, event, path }: UpdateEventParams) {
+export async function updateQuiz({ userId, quiz, path }: UpdateQuizParams) {
 	await connectToDatabase();
 
-	const eventToUpdate = await Event.findById(event._id);
-	if (!eventToUpdate || eventToUpdate.organiser.toHexString() !== userId) {
-		throw new Error("Unauthorized or event not found");
+	const quizToUpdate = await Quiz.findById(quiz._id);
+	if (!quizToUpdate || quizToUpdate.createdBy.toHexString() !== userId) {
+		throw new Error("Unauthorized or quiz not found");
 	}
 
-	const updatedEvent = await Event.findByIdAndUpdate(
-		event._id,
-		{ ...event, category: event.categoryId },
+	const updatedQuiz = await Quiz.findByIdAndUpdate(
+		quiz._id,
+		{ ...quiz, category: quiz.categoryId },
 		{ new: true }
 	);
 	revalidatePath(path);
 
-	return JSON.parse(JSON.stringify(updatedEvent));
+	return JSON.parse(JSON.stringify(updatedQuiz));
 }
 
-// DELETE
-export async function deleteEvent({ eventId, path }: DeleteEventParams) {
+export async function deleteQuiz({ quizId, path }: DeleteQuizParams) {
 	await connectToDatabase();
 
-	const deletedEvent = await Event.findByIdAndDelete(eventId);
-	if (deletedEvent) revalidatePath(path);
+	const deletedQuiz = await Quiz.findByIdAndDelete(quizId);
+	if (deletedQuiz) revalidatePath(path);
 }
 
-// CONVERTED
 export async function getAllQuizzes({
 	query,
 	limit = 6,
@@ -106,69 +101,40 @@ export async function getAllQuizzes({
 	};
 
 	const skipAmount = (Number(page) - 1) * limit;
-	const eventsQuery = Quiz.find(conditions)
+	const quizQuery = Quiz.find(conditions)
 		.sort({ createdAt: "desc" })
 		.skip(skipAmount)
 		.limit(limit);
 
-	const events = await populateEvent(eventsQuery);
+	const quizzes = await populateEvent(quizQuery);
 	const quizCount = await Quiz.countDocuments(conditions);
 
 	return {
-		data: JSON.parse(JSON.stringify(events)),
+		data: JSON.parse(JSON.stringify(quizzes)),
 		totalPages: Math.ceil(quizCount / limit),
 	};
 }
 
-// GET EVENTS BY organiser
-export async function getEventsByUser({
+export async function getQuizzesByUser({
 	userId,
 	limit = 6,
 	page,
-}: GetEventsByUserParams) {
+}: GetQuizzesByUserParams) {
 	await connectToDatabase();
 
-	const conditions = { organiser: userId };
+	const conditions = { createdBy: userId };
 	const skipAmount = (page - 1) * limit;
 
-	const eventsQuery = Event.find(conditions)
+	const quizQuery = Quiz.find(conditions)
 		.sort({ createdAt: "desc" })
 		.skip(skipAmount)
 		.limit(limit);
 
-	const events = await populateEvent(eventsQuery);
-	const eventsCount = await Event.countDocuments(conditions);
+	const quizzes = await populateEvent(quizQuery);
+	const quizzesCount = await Quiz.countDocuments(conditions);
 
 	return {
-		data: JSON.parse(JSON.stringify(events)),
-		totalPages: Math.ceil(eventsCount / limit),
-	};
-}
-
-// GET RELATED EVENTS: EVENTS WITH SAME CATEGORY
-export async function getRelatedEventsByCategory({
-	categoryId,
-	eventId,
-	limit = 3,
-	page = 1,
-}: GetRelatedEventsByCategoryParams) {
-	await connectToDatabase();
-
-	const skipAmount = (Number(page) - 1) * limit;
-	const conditions = {
-		$and: [{ category: categoryId }, { _id: { $ne: eventId } }],
-	};
-
-	const eventsQuery = Event.find(conditions)
-		.sort({ createdAt: "desc" })
-		.skip(skipAmount)
-		.limit(limit);
-
-	const events = await populateEvent(eventsQuery);
-	const eventsCount = await Event.countDocuments(conditions);
-
-	return {
-		data: JSON.parse(JSON.stringify(events)),
-		totalPages: Math.ceil(eventsCount / limit),
+		data: JSON.parse(JSON.stringify(quizzes)),
+		totalPages: Math.ceil(quizzesCount / limit),
 	};
 }

@@ -25,17 +25,17 @@ import { useUploadThing } from "@/lib/uploadthing";
 
 import "react-datepicker/dist/react-datepicker.css";
 import { useRouter } from "next/navigation";
-import { createQuiz, updateEvent } from "@/lib/actions/quiz.actions";
-import { IEvent } from "@/lib/database/models/quiz.model";
+import { createQuiz, updateQuiz } from "@/lib/actions/quiz.actions";
+import { IQuiz } from "@/lib/database/models/quiz.model";
 
-type EventFormProps = {
+type QuizFormProps = {
 	userId: string;
 	type: "Create" | "Update";
-	event?: IEvent;
-	eventId?: string;
+	quiz?: IQuiz;
+	quizId?: string;
 };
 
-const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
+const QuizForm = ({ userId, type, quiz, quizId }: QuizFormProps) => {
 	const [files, setFiles] = useState<File[]>([]);
 	const initialValues = quizDefaultValues;
 	const router = useRouter();
@@ -78,21 +78,21 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
 		}
 
 		if (type === "Update") {
-			if (!eventId) {
+			if (!quizId) {
 				router.back();
 				return;
 			}
 
 			try {
-				const updatedEvent = await updateEvent({
+				const updatedQuiz = await updateQuiz({
 					userId,
-					event: { ...values, imageUrl: uploadedImageUrl, _id: eventId },
-					path: `/quiz/${eventId}`,
+					quiz: { ...values, imageUrl: uploadedImageUrl, _id: quizId },
+					path: `/quiz/${quizId}`,
 				});
 
-				if (updatedEvent) {
+				if (updatedQuiz) {
 					form.reset();
-					router.push(`/quiz/${updatedEvent._id}`);
+					router.push(`/quiz/${updatedQuiz._id}`);
 				}
 			} catch (error) {
 				console.log(error);
@@ -188,4 +188,4 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
 	);
 };
 
-export default EventForm;
+export default QuizForm;
