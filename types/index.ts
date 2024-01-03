@@ -16,19 +16,12 @@ export type UpdateUserParams = {
 };
 
 // ====== EVENT PARAMS
-export type CreateEventParams = {
+export type CreateQuizParams = {
 	userId: string;
-	event: {
+	quiz: {
 		title: string;
 		description: string;
-		location: string;
 		imageUrl: string;
-		startDateTime: Date;
-		endDateTime: Date;
-		categoryId: string;
-		price: string;
-		isFree: boolean;
-		url: string;
 	};
 	path: string;
 };

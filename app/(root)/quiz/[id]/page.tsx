@@ -3,7 +3,7 @@ import Collection from "@/components/shared/Collection";
 import {
 	getEventById,
 	getRelatedEventsByCategory,
-} from "@/lib/actions/event.actions";
+} from "@/lib/actions/quiz.actions";
 import { formatDateTime } from "@/lib/utils";
 import { SearchParamProps } from "@/types";
 import Image from "next/image";

@@ -11,10 +11,10 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-	title: "Event Spark",
-	description: "Event Spark is a platform for event management.",
+	title: "Quiz Quest",
+	description: "Quiz Quest is a online platform for party games.",
 	icons: {
-		icon: "/assets/images/logo.svg",
+		icon: "/assets/images/logo.jpg",
 	},
 };
 
