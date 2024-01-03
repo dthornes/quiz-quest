@@ -31,9 +31,9 @@ export default async function Home({ searchParams }: SearchParamProps) {
 				id="quizzes"
 				className="wrapper my-8 flex flex-col gap-8 md:gap-12"
 			>
-				<h2 className="h2-bold">Previous Quizzes</h2>
+				<h2 className="h2-bold">Available Quizzes</h2>
 
-				<QuizCollection searchParams={searchParams} />
+				{/* <QuizCollection searchParams={searchParams} /> */}
 			</section>
 		</>
 	);
