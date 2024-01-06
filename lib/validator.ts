@@ -16,3 +16,5 @@ export const quizFormSchema = z.object({
 		})
 	),
 });
+
+export type QuizFormSchemaProps = z.infer<typeof quizFormSchema>;

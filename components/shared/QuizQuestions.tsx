@@ -1,21 +1,25 @@
 import React from "react";
 import { FormControl, FormField, FormItem, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
-import { useFieldArray, useForm } from "react-hook-form";
+import { UseFormReturn, useFieldArray } from "react-hook-form";
 import { Button } from "../ui/button";
 import { getAPIQuestions } from "@/lib/actions/question.actions";
-import { QuizQuestionsProps } from "@/types";
+import { QuizFormSchemaProps } from "@/lib/validator";
 
-const QuizQuestions = ({ form }) => {
-	const { control, register } = form;
-	// use generic to pass shit here
+type QuizQuestionsProps = {
+	form: UseFormReturn<QuizFormSchemaProps, any, undefined>;
+};
+
+const QuizQuestions = ({ form }: QuizQuestionsProps) => {
+	const { control } = form;
+
 	const { fields, append, remove } = useFieldArray({
 		control,
 		name: "quizItems",
 	});
 
 	const generateQuestions = async (
-		e: MouseEvent<HTMLButtonElement, MouseEvent>
+		e: React.MouseEvent<HTMLButtonElement, MouseEvent>
 	) => {
 		e.preventDefault();
 
@@ -35,10 +39,14 @@ const QuizQuestions = ({ form }) => {
 			</Button>
 
 			{fields?.map((question, index) => (
-				<div key={question.id} className="bg-primary-500 p-3 rounded-lg">
+				<div
+					key={question.id}
+					className="p-3 rounded-lg border-slate-300 border-2"
+				>
+					<h2 className="mb-2">Question {index + 1}</h2>
 					<FormField
-						control={form.control}
-						name={`quizItems[${index}].question`}
+						control={control}
+						name={`quizItems.${index}.question`}
 						render={({ field }) => (
 							<FormItem className="flex-1 mb-5">
 								<FormControl>
@@ -55,15 +63,15 @@ const QuizQuestions = ({ form }) => {
 
 					<div className="flex gap-3 justify-between">
 						<FormField
-							control={form.control}
-							name={`quizItems[${index}].correctAnswer`}
+							control={control}
+							name={`quizItems.${index}.correctAnswer`}
 							render={({ field }) => (
 								<FormItem className="flex-1">
 									<FormControl>
 										<Input
 											placeholder="Answer"
 											{...field}
-											className="input-field"
+											className="input-field input-field-success"
 										/>
 									</FormControl>
 									<FormMessage />
@@ -74,8 +82,8 @@ const QuizQuestions = ({ form }) => {
 						{question.incorrectAnswers.map((incorrectAnswer, answerIndex) => (
 							<FormField
 								key={incorrectAnswer}
-								control={form.control}
-								name={`quizItems[${index}].incorrectAnswer[${answerIndex}]`}
+								control={control}
+								name={`quizItems.${index}.incorrectAnswers.${answerIndex}`}
 								render={({ field }) => (
 									<FormItem className="flex-1">
 										<FormControl>

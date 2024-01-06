@@ -13,7 +13,7 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { quizFormSchema } from "@/lib/validator";
+import { QuizFormSchemaProps, quizFormSchema } from "@/lib/validator";
 import * as z from "zod";
 import { quizDefaultValues } from "@/constants";
 import Dropdown from "./Dropdown";
@@ -43,12 +43,12 @@ const QuizForm = ({ userId, type, quiz, quizId }: QuizFormProps) => {
 
 	const { startUpload } = useUploadThing("imageUploader");
 
-	const form = useForm<z.infer<typeof quizFormSchema>>({
+	const form = useForm<QuizFormSchemaProps>({
 		resolver: zodResolver(quizFormSchema),
 		defaultValues: initialValues,
 	});
 
-	async function onSubmit(values: z.infer<typeof quizFormSchema>) {
+	async function onSubmit(values: QuizFormSchemaProps) {
 		let uploadedImageUrl = values.imageUrl;
 
 		if (files.length > 0) {
