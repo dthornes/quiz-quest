@@ -8,4 +8,11 @@ export const quizFormSchema = z.object({
 		.max(400, "Description must be less than 400 characters"),
 	imageUrl: z.string(),
 	categoryId: z.string(),
+	quizItems: z.array(
+		z.object({
+			question: z.string(),
+			correctAnswer: z.string(),
+			incorrectAnswers: z.array(z.string()),
+		})
+	),
 });

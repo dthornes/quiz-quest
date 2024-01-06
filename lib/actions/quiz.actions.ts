@@ -22,15 +22,18 @@ const getCategoryByName = async (name: string) => {
 const populateEvent = (query: any) => {
 	return query
 		.populate({
-			path: "organiser",
+			path: "createdBy",
 			model: User,
-			select: "_id firstName lastName",
+			select: "_id username",
 		})
 		.populate({ path: "category", model: Category, select: "_id name" });
 };
 
 export async function createQuiz({ userId, quiz, path }: CreateQuizParams) {
 	await connectToDatabase();
+
+	console.log(quiz);
+	return;
 
 	const user = await User.findById(userId);
 	if (!user) throw new Error("User not found");

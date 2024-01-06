@@ -4,14 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { DeleteConfirmation } from "./DeleteConfirmation";
+import { Button } from "../ui/button";
 
 type CardProps = {
 	quiz: IQuiz;
-	hasOrderLink?: boolean;
-	hidePrice?: boolean;
 };
 
-const Card = ({ quiz, hasOrderLink, hidePrice }: CardProps) => {
+const Card = ({ quiz }: CardProps) => {
 	const { sessionClaims } = auth();
 	const userId = sessionClaims?.userId as string;
 
@@ -25,9 +24,9 @@ const Card = ({ quiz, hasOrderLink, hidePrice }: CardProps) => {
 				className="flex-center flex-grow bg-gray-50 bg-cover bg-center text-grey-500"
 			/>
 
-			{isEventCreator && !hidePrice && (
+			{isEventCreator && (
 				<div className="absolute right-2 top-2 flex flex-col gap-4 rounded-xl bg-white p-3 shadow-sm transition-all">
-					<Link href={`/events/${quiz._id}/update`}>
+					<Link href={`/quiz/${quiz._id}/update`}>
 						<Image
 							src="/assets/icons/edit.svg"
 							alt="edit"
@@ -41,24 +40,20 @@ const Card = ({ quiz, hasOrderLink, hidePrice }: CardProps) => {
 			)}
 
 			<div className="flex min-h-[230px] flex-col gap-3 p-5 md:gap-4">
-				{!hidePrice && (
-					<div className="flex gap-2">
-						<p className="p-semibold-14 w-min rounded-full bg-grey-500/10 px-4 py-1 text-grey-500 line-clamp-1">
-							{quiz.category.name}
-						</p>
-					</div>
-				)}
-
-				<Link href={`/events/${quiz._id}`}>
-					<p className="p-medium-16 md:p-medium-20 line-clamp-2 flex-1 text-black">
-						{quiz.title}
-					</p>
-				</Link>
+				<p className="p-medium-16 md:p-medium-20 line-clamp-2 flex-1 text-black">
+					{quiz.title}
+				</p>
 
 				<div className="flex-between w-full">
 					<p className="p-medium-14 md:p-medium-16 text-grey-600">
-						{quiz.createdBy.firstName} {quiz.createdBy.lastName}
+						Created by {quiz.createdBy.username}
 					</p>
+				</div>
+
+				<div className="mt-auto w-full">
+					<Button size="lg" className="button col-span-2 w-full">
+						<Link href={`/play/${quiz._id}`}>Play</Link>
+					</Button>
 				</div>
 			</div>
 		</div>

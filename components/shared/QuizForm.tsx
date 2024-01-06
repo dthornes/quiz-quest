@@ -27,6 +27,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useRouter } from "next/navigation";
 import { createQuiz, updateQuiz } from "@/lib/actions/quiz.actions";
 import { IQuiz } from "@/lib/database/models/quiz.model";
+import QuizQuestions from "./QuizQuestions";
 
 type QuizFormProps = {
 	userId: string;
@@ -174,6 +175,8 @@ const QuizForm = ({ userId, type, quiz, quizId }: QuizFormProps) => {
 						)}
 					/>
 				</div>
+
+				<QuizQuestions form={form} />
 
 				<Button
 					type="submit"

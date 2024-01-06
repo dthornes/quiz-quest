@@ -33,7 +33,7 @@ export default async function Home({ searchParams }: SearchParamProps) {
 			>
 				<h2 className="h2-bold">Available Quizzes</h2>
 
-				{/* <QuizCollection searchParams={searchParams} /> */}
+				<QuizCollection searchParams={searchParams} />
 			</section>
 		</>
 	);

@@ -44,7 +44,7 @@ export type DeleteQuizParams = {
 	path: string;
 };
 
-export type GetAllEventsParams = {
+export type GetAllQuizzesParams = {
 	query: string;
 	category: string;
 	limit: number;
@@ -57,28 +57,23 @@ export type GetQuizzesByUserParams = {
 	page: number;
 };
 
-export type GetRelatedEventsByCategoryParams = {
+export type GetRelatedQuizzesByCategoryParams = {
 	categoryId: string;
 	eventId: string;
 	limit?: number;
 	page: number | string;
 };
 
-export type Event = {
+export type Quiz = {
 	_id: string;
 	title: string;
 	description: string;
-	price: string;
-	isFree: boolean;
 	imageUrl: string;
-	location: string;
-	startDateTime: Date;
-	endDateTime: Date;
 	url: string;
-	organiser: {
+	createdAt: Date;
+	createdBy: {
 		_id: string;
-		firstName: string;
-		lastName: string;
+		username: string;
 	};
 	category: {
 		_id: string;
@@ -89,34 +84,6 @@ export type Event = {
 // ====== CATEGORY PARAMS
 export type CreateCategoryParams = {
 	categoryName: string;
-};
-
-// ====== ORDER PARAMS
-export type CheckoutOrderParams = {
-	eventTitle: string;
-	eventId: string;
-	price: string;
-	isFree: boolean;
-	buyerId: string;
-};
-
-export type CreateOrderParams = {
-	stripeId: string;
-	eventId: string;
-	buyerId: string;
-	totalAmount: string;
-	createdAt: Date;
-};
-
-export type GetOrdersByEventParams = {
-	eventId: string;
-	searchString: string;
-};
-
-export type GetOrdersByUserParams = {
-	userId: string | null;
-	limit?: number;
-	page: string | number | null;
 };
 
 // ====== URL QUERY PARAMS
@@ -132,6 +99,27 @@ export type RemoveUrlQueryParams = {
 };
 
 export type SearchParamProps = {
-	params: { id: string };
 	searchParams: { [key: string]: string | string[] | undefined };
+};
+
+// ====== QUIZ API PARAMS
+export type QuizApiProps = {
+	category: string;
+	id: string;
+	correctAnswer: string;
+	incorrectAnswers: string[];
+	question: {
+		text: string;
+	};
+	tags: string[];
+	type: string;
+	difficulty: string;
+	regions: string[];
+	isNiche: boolean;
+};
+
+export type QuizQuestionsProps = {
+	question: string;
+	correctAnswer: string;
+	incorrectAnswers: string[];
 };
