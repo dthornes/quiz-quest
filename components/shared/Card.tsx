@@ -51,8 +51,8 @@ const Card = ({ quiz }: CardProps) => {
 				</div>
 
 				<div className="mt-auto w-full">
-					<Button size="lg" className="button col-span-2 w-full">
-						<Link href={`/play/${quiz._id}`}>Play</Link>
+					<Button size="lg" className="button col-span-2 w-full" asChild>
+						<Link href={`/quiz/${quiz._id}/play`}>Play</Link>
 					</Button>
 				</div>
 			</div>

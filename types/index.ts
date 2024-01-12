@@ -1,3 +1,5 @@
+import { QuizFormSchemaProps } from "@/lib/validator";
+
 // ====== USER PARAMS
 export type CreateUserParams = {
 	clerkId: string;
@@ -18,12 +20,7 @@ export type UpdateUserParams = {
 // ====== QUIZ PARAMS
 export type CreateQuizParams = {
 	userId: string;
-	quiz: {
-		title: string;
-		description: string;
-		imageUrl: string;
-		categoryId: string;
-	};
+	quiz: QuizFormSchemaProps;
 	path: string;
 };
 
@@ -81,6 +78,8 @@ export type Quiz = {
 	};
 };
 
+export type QuizWithQuestions = {};
+
 // ====== CATEGORY PARAMS
 export type CreateCategoryParams = {
 	categoryName: string;
@@ -98,8 +97,12 @@ export type RemoveUrlQueryParams = {
 	keysToRemove: string[];
 };
 
-export type SearchParamProps = {
+export type SearchCollectionProps = {
 	searchParams: { [key: string]: string | string[] | undefined };
+};
+
+export type SearchParamProps = SearchCollectionProps & {
+	params: { id: string };
 };
 
 // ====== QUIZ API PARAMS

@@ -1,6 +1,8 @@
+import { Button } from "@/components/ui/button";
 import { getQuizById } from "@/lib/actions/quiz.actions";
 import { SearchParamProps } from "@/types";
 import Image from "next/image";
+import Link from "next/link";
 
 const EventDetails = async ({ params: { id } }: SearchParamProps) => {
 	const quiz = await getQuizById(id);
@@ -27,7 +29,6 @@ const EventDetails = async ({ params: { id } }: SearchParamProps) => {
 										{quiz.category.name}
 									</p>
 								</div>
-
 								<p className="p-medium-18 ml-2 mt-2 sm:mt-0">
 									by{" "}
 									<span className="text-primary-500">
@@ -35,6 +36,14 @@ const EventDetails = async ({ params: { id } }: SearchParamProps) => {
 									</span>
 								</p>
 							</div>
+						</div>
+						<div className="mt-auto flex gap-2">
+							<Button className="button w-full" asChild>
+								<Link href={`/quiz/${id}/update`}>Update</Link>
+							</Button>
+							<Button className="button w-full" asChild>
+								<Link href={`/quiz/${id}/play`}>Play</Link>
+							</Button>
 						</div>
 					</div>
 				</div>

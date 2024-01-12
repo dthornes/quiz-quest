@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { QuizFormSchemaProps, quizFormSchema } from "@/lib/validator";
-import * as z from "zod";
 import { quizDefaultValues } from "@/constants";
 import Dropdown from "./Dropdown";
 import { Textarea } from "@/components/ui/textarea";
@@ -38,7 +37,7 @@ type QuizFormProps = {
 
 const QuizForm = ({ userId, type, quiz, quizId }: QuizFormProps) => {
 	const [files, setFiles] = useState<File[]>([]);
-	const initialValues = quizDefaultValues;
+	const initialValues = quiz && type === "Update" ? quiz : quizDefaultValues;
 	const router = useRouter();
 
 	const { startUpload } = useUploadThing("imageUploader");

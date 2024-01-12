@@ -1,11 +1,11 @@
 import React from "react";
 import Collection from "./Collection";
 import { getAllQuizzes } from "@/lib/actions/quiz.actions";
-import { SearchParamProps } from "@/types";
+import { SearchCollectionProps } from "@/types";
 import Search from "./Search";
 import CategoryFilter from "./CategoryFilter";
 
-const QuizCollection = async ({ searchParams }: SearchParamProps) => {
+const QuizCollection = async ({ searchParams }: SearchCollectionProps) => {
 	const page = Number(searchParams?.page) || 1;
 	const searchText = (searchParams?.query as string) || "";
 	const category = (searchParams?.category as string) || "";
@@ -27,7 +27,6 @@ const QuizCollection = async ({ searchParams }: SearchParamProps) => {
 				data={quizzes?.data}
 				emptyTitle="No Quizzes Found"
 				emptyStateSubtext="Come back later"
-				collectionType="All_Quizzes"
 				limit={6}
 				page={page}
 				totalPages={quizzes?.totalPages}

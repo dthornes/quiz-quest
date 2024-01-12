@@ -9,7 +9,7 @@ import Category from "@/lib/database/models/category.model";
 
 import {
 	CreateQuizParams,
-	GetAllEventsParams,
+	GetAllQuizzesParams,
 	UpdateQuizParams,
 	DeleteQuizParams,
 	GetQuizzesByUserParams,
@@ -32,9 +32,6 @@ const populateEvent = (query: any) => {
 export async function createQuiz({ userId, quiz, path }: CreateQuizParams) {
 	await connectToDatabase();
 
-	console.log(quiz);
-	return;
-
 	const user = await User.findById(userId);
 	if (!user) throw new Error("User not found");
 
@@ -44,12 +41,13 @@ export async function createQuiz({ userId, quiz, path }: CreateQuizParams) {
 		createdBy: userId,
 		createdAt: Date.now(),
 	});
+
 	revalidatePath(path);
 
 	return JSON.parse(JSON.stringify(newQuiz));
 }
 
-export async function getQuizById(quizId: string) {
+export async function getQuizById(quizId: string): QuizWithQuestions {
 	await connectToDatabase();
 
 	const quiz = await populateEvent(Quiz.findById(quizId));
@@ -89,7 +87,7 @@ export async function getAllQuizzes({
 	limit = 6,
 	page,
 	category,
-}: GetAllEventsParams) {
+}: GetAllQuizzesParams) {
 	await connectToDatabase();
 
 	const titleCondition = query
