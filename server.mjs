@@ -19,11 +19,15 @@ io.on("connection", (socket) => {
 	console.log("A player connected:", socket.id);
 
 	socket.on("add_player", ({ roomId, player }) => {
-		connectedPlayers[socket.id] = player;
-		socket.join(roomId);
-		console.log(`Player ${player} has joined room ${roomId}`);
+		if (!(socket.id in connectedPlayers)) {
+			connectedPlayers[socket.id] = player;
+			socket.join(roomId);
 
-		io.emit("player_list", Object.values(connectedPlayers));
+			console.log(`Player ${player} has joined room ${roomId}`);
+			console.log(`Player list is ${JSON.stringify(connectedPlayers)}`);
+
+			io.emit("player_list", Object.values(connectedPlayers));
+		}
 	});
 
 	socket.on("send_answer", ({ roomId, answer }) => {
@@ -33,6 +37,7 @@ io.on("connection", (socket) => {
 	});
 
 	socket.on("disconnect", () => {
+		socket.removeAllListeners();
 		console.log("A player disconnected:", socket.id);
 	});
 });

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Button } from "../ui/button";
 import NavItems from "./NavItems";
 import MobileNav from "./MobileNav";
+import WebsocketsConnection from "./WebsocketsConnection";
 
 const Header = () => {
 	return (
@@ -34,6 +35,7 @@ const Header = () => {
 							<Link href="/sign-in">Login</Link>
 						</Button>
 					</SignedOut>
+					<WebsocketsConnection />
 				</div>
 			</div>
 		</header>
