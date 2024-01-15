@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import JoiningScreen from "@/components/shared/JoiningScreen";
+import Joining from "@/components/quiz/Joining";
 import useSockets from "@/hooks/useSockets";
+import Quiz from "@/components/quiz/Quiz";
+import Leaderboard from "@/components/quiz/Leaderboard";
 
 type PlayQuizProps = {
 	params: {
@@ -11,13 +12,15 @@ type PlayQuizProps = {
 };
 
 const PlayQuiz = ({ params: { id } }: PlayQuizProps) => {
-	const { player, setPlayer, players } = useSockets({ roomId: id });
+	const socket = useSockets({ roomId: id });
 
-	return (
-		<div className="h-full flex">
-			<JoiningScreen setPlayer={setPlayer} players={players} />
-		</div>
-	);
+	const screen = {
+		joining: <Joining {...socket} roomId={id} />,
+		quiz: <Quiz />,
+		leaderboard: <Leaderboard />,
+	};
+
+	return <div className="h-full flex">{screen[socket.currentScreen]}</div>;
 };
 
 export default PlayQuiz;

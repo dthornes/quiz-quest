@@ -3,13 +3,10 @@ import { Server } from "socket.io";
 import cors from "cors";
 
 const httpServer = createServer();
-
 const io = new Server(httpServer, {
 	cors: {
-		origin: "http://localhost:3000", // Replace with your frontend URL
+		origin: "http://localhost:3000",
 		methods: ["GET", "POST"],
-		allowedHeaders: ["my-custom-header"],
-		credentials: true,
 	},
 });
 
@@ -30,14 +27,12 @@ io.on("connection", (socket) => {
 		}
 	});
 
-	socket.on("send_answer", ({ roomId, answer }) => {
-		// Stuff here...
-
-		socket.to(roomId).emit("recieve_answer", answer);
+	socket.on("confirm_players", ({ roomId }) => {
+		io.to(roomId).emit("start_quiz");
 	});
 
 	socket.on("disconnect", () => {
-		socket.removeAllListeners();
+		delete connectedPlayers[socket.id];
 		console.log("A player disconnected:", socket.id);
 	});
 });
