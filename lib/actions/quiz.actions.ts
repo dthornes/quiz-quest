@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 
 import { connectToDatabase } from "@/lib/database";
-import Quiz from "@/lib/database/models/quiz.model";
+import Quiz, { IQuiz } from "@/lib/database/models/quiz.model";
 import User from "@/lib/database/models/user.model";
 import Category from "@/lib/database/models/category.model";
 
@@ -13,6 +13,7 @@ import {
 	UpdateQuizParams,
 	DeleteQuizParams,
 	GetQuizzesByUserParams,
+	SetQuizActive,
 } from "@/types";
 
 const getCategoryByName = async (name: string) => {
@@ -47,7 +48,7 @@ export async function createQuiz({ userId, quiz, path }: CreateQuizParams) {
 	return JSON.parse(JSON.stringify(newQuiz));
 }
 
-export async function getQuizById(quizId: string): QuizWithQuestions {
+export async function getQuizById(quizId: string) {
 	await connectToDatabase();
 
 	const quiz = await populateEvent(Quiz.findById(quizId));
@@ -55,6 +56,16 @@ export async function getQuizById(quizId: string): QuizWithQuestions {
 	if (!quiz) throw new Error("Quiz not found");
 
 	return JSON.parse(JSON.stringify(quiz));
+}
+
+export async function getQuizItemsById(quizId: string) {
+	await connectToDatabase();
+
+	const quiz = await populateEvent(Quiz.findById(quizId));
+
+	if (!quiz) throw new Error("Quiz not found");
+
+	return JSON.parse(JSON.stringify(quiz.quizItems));
 }
 
 export async function updateQuiz({ userId, quiz, path }: UpdateQuizParams) {
@@ -138,4 +149,24 @@ export async function getQuizzesByUser({
 		data: JSON.parse(JSON.stringify(quizzes)),
 		totalPages: Math.ceil(quizzesCount / limit),
 	};
+}
+
+export async function setQuizActiveStatus({
+	userId,
+	quizId,
+	isActive,
+}: SetQuizActive) {
+	await connectToDatabase();
+
+	const user = await User.findById(userId);
+	const quiz = await Quiz.findById(quizId);
+	if (!user || !quiz) throw new Error("Unauthorized or quiz not found");
+
+	const updatedQuiz = await Quiz.findByIdAndUpdate(
+		quizId,
+		{ $set: { isActive } },
+		{ new: true }
+	);
+
+	return JSON.parse(JSON.stringify(updatedQuiz.isActive));
 }

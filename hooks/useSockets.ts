@@ -1,17 +1,21 @@
-import { WebsocketsContext } from "@/context/WebsocketsContext";
+import { SocketsContext } from "@/context/SocketsContext";
+import { setQuizActiveStatus } from "@/lib/actions/quiz.actions";
 import { useState, useEffect, useContext } from "react";
 
 type useSocketsParams = {
+	userId: string;
 	roomId: string;
 };
 
-type currentSreen = "joining" | "quiz" | "leaderboard";
+const useSockets = ({ userId, roomId }: useSocketsParams) => {
+	const { socket } = useContext(SocketsContext);
 
-const useSockets = ({ roomId }: useSocketsParams) => {
-	const { socket } = useContext(WebsocketsContext);
-	const [currentScreen, setCurrentScreen] = useState<currentSreen>("joining");
 	const [player, setPlayer] = useState("");
 	const [players, setPlayers] = useState([]);
+
+	const startQuiz = async () => {
+		await setQuizActiveStatus({ userId, quizId: roomId, isActive: true });
+	};
 
 	useEffect(() => {
 		socket.on("player_list", (players) => {
@@ -19,7 +23,7 @@ const useSockets = ({ roomId }: useSocketsParams) => {
 		});
 
 		socket.on("start_quiz", () => {
-			setCurrentScreen("quiz");
+			startQuiz();
 		});
 	}, []);
 
@@ -29,7 +33,7 @@ const useSockets = ({ roomId }: useSocketsParams) => {
 		}
 	}, [player]);
 
-	return { player, setPlayer, players, currentScreen };
+	return { socket, player, setPlayer, players };
 };
 
 export default useSockets;

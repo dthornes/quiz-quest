@@ -225,6 +225,10 @@ body {
 		@apply rounded-full h-[54px] p-regular-16;
 	}
 
+	.button-lg {
+		@apply rounded-full h-[84px] p-bold-20;
+	}
+
 	.select-item {
 		@apply py-3 cursor-pointer  focus:bg-primary-50;
 	}

@@ -61,6 +61,12 @@ export type GetRelatedQuizzesByCategoryParams = {
 	page: number | string;
 };
 
+export type SetQuizActive = {
+	userId: string;
+	quizId: string;
+	isActive: boolean;
+};
+
 export type Quiz = {
 	_id: string;
 	title: string;
@@ -77,8 +83,6 @@ export type Quiz = {
 		name: string;
 	};
 };
-
-export type QuizWithQuestions = {};
 
 // ====== CATEGORY PARAMS
 export type CreateCategoryParams = {

@@ -28,7 +28,12 @@ io.on("connection", (socket) => {
 	});
 
 	socket.on("confirm_players", ({ roomId }) => {
+		io.to(roomId).emit("screen", "quiz");
 		io.to(roomId).emit("start_quiz");
+	});
+
+	socket.on("reset_quiz", ({ roomId }) => {
+		io.to(roomId).emit("screen", "joining");
 	});
 
 	socket.on("disconnect", () => {

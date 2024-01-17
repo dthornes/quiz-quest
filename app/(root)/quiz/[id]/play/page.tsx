@@ -1,9 +1,5 @@
-"use client";
-
-import Joining from "@/components/quiz/Joining";
-import useSockets from "@/hooks/useSockets";
-import Quiz from "@/components/quiz/Quiz";
-import Leaderboard from "@/components/quiz/Leaderboard";
+import Screens from "@/components/quiz/Screens";
+import { auth } from "@clerk/nextjs";
 
 type PlayQuizProps = {
 	params: {
@@ -12,15 +8,11 @@ type PlayQuizProps = {
 };
 
 const PlayQuiz = ({ params: { id } }: PlayQuizProps) => {
-	const socket = useSockets({ roomId: id });
+	const { sessionClaims } = auth();
 
-	const screen = {
-		joining: <Joining {...socket} roomId={id} />,
-		quiz: <Quiz />,
-		leaderboard: <Leaderboard />,
-	};
+	const userId = sessionClaims?.userId as string;
 
-	return <div className="h-full flex">{screen[socket.currentScreen]}</div>;
+	return <Screens userId={userId} roomId={id} />;
 };
 
 export default PlayQuiz;

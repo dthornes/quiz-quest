@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useContext, useEffect, useState } from "react";
-import { WebsocketsContext } from "@/context/WebsocketsContext";
+import { SocketsContext } from "@/context/SocketsContext";
 
 const WebsocketsConnection = () => {
-	const { socket } = useContext(WebsocketsContext);
+	const { socket } = useContext(SocketsContext);
 	const [connected, setConnected] = useState(false);
 
 	useEffect(() => {

@@ -8,6 +8,7 @@ export interface IQuiz extends Document {
 	imageUrl: string;
 	quizItems: QuizQuestions[];
 	category: { _id: string; name: string };
+	isActive: boolean;
 	createdBy: { _id: string; firstName: string; lastName: string };
 	createdAt: Date;
 }
@@ -32,6 +33,7 @@ const QuizSchema = new Schema({
 	imageUrl: { type: String, required: true },
 	category: { type: Schema.Types.ObjectId, ref: "Category" },
 	quizItems: { type: [quizItemSchema], required: true },
+	isActive: { type: Boolean, default: false },
 	createdBy: { type: Schema.Types.ObjectId, ref: "User" },
 	createdAt: { type: Date, default: Date.now },
 });
