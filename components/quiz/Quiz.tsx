@@ -7,26 +7,34 @@ import { SocketsContext } from "@/context/SocketsContext";
 
 type QuizProps = {
 	userId: string;
-	roomId: string;
-	quizItems: IQuiz["quizItems"] | undefined;
+	quizId: string;
+	quizItems: IQuiz["quizItems"];
 };
 
-const Quiz = ({ userId, roomId, quizItems }: QuizProps) => {
+const Quiz = ({ userId, quizId, quizItems }: QuizProps) => {
 	const { socket } = useContext(SocketsContext);
 	const [activeQuestion, setActiveQuestion] = useState(0);
 	const [selectedAnswer, setSelectedAnswer] = useState("");
 
 	useEffect(() => {
-		// listen event
-	}, [activeQuestion]);
+		console.log("here");
+		socket.on("set_question", (activeQuestion) => {
+			console.log(activeQuestion);
+			setActiveQuestion(activeQuestion);
+		});
+	}, []);
 
 	useEffect(() => {
-		// fire event
+		socket.emit("answer_question", selectedAnswer);
 	}, [selectedAnswer]);
 
 	const resetQuiz = async () => {
-		await setQuizActiveStatus({ userId, quizId: roomId, isActive: false });
+		await setQuizActiveStatus({ userId, quizId, isActive: false });
 		socket.emit("reset_quiz");
+	};
+
+	const nextQuestion = () => {
+		socket.emit("get_question", { quizId, activeQuestion });
 	};
 
 	const buttonColour = () => {
@@ -65,6 +73,15 @@ const Quiz = ({ userId, roomId, quizItems }: QuizProps) => {
 				</div>
 
 				<SignedIn>
+					<Button
+						className="button-lg"
+						size="lg"
+						variant="secondary"
+						onClick={() => nextQuestion()}
+					>
+						Next Question
+					</Button>
+
 					<Button
 						className="button-lg"
 						size="lg"

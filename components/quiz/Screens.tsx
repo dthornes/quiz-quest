@@ -39,11 +39,11 @@ const Screens = ({ userId, roomId }: ScreensProps) => {
 
 	useEffect(() => {
 		if (quiz) {
-			if (!quiz?.isActive) {
+			if (!quiz.isActive) {
 				setCurrentScreen("joining");
 			}
 
-			if (quiz?.isActive) {
+			if (quiz.isActive) {
 				setCurrentScreen("quiz");
 			}
 		}
@@ -52,12 +52,12 @@ const Screens = ({ userId, roomId }: ScreensProps) => {
 	const screen = {
 		loading: <Loader />,
 		joining: <Joining {...socket} roomId={roomId} />,
-		quiz: (
+		quiz: quiz && (
 			<Quiz
 				{...socket}
-				quizItems={quiz?.quizItems}
+				quizItems={quiz.quizItems}
 				userId={userId}
-				roomId={roomId}
+				quizId={roomId}
 			/>
 		),
 		leaderboard: <Leaderboard />,

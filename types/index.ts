@@ -130,3 +130,9 @@ export type QuizQuestionsProps = {
 	correctAnswer: string;
 	incorrectAnswers: string[];
 };
+
+// ====== PLAYER PARAMS
+export type CreatePlayerParams = {
+	quizId: string;
+	name: string;
+};
