@@ -17,15 +17,13 @@ const Quiz = ({ userId, quizId, quizItems }: QuizProps) => {
 	const [selectedAnswer, setSelectedAnswer] = useState("");
 
 	useEffect(() => {
-		console.log("here");
 		socket.on("set_question", (activeQuestion) => {
-			console.log(activeQuestion);
 			setActiveQuestion(activeQuestion);
 		});
 	}, []);
 
 	useEffect(() => {
-		socket.emit("answer_question", selectedAnswer);
+		socket.emit("answer_question", { userId, quizId, selectedAnswer });
 	}, [selectedAnswer]);
 
 	const resetQuiz = async () => {

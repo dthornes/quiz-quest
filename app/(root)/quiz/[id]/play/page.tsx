@@ -12,7 +12,7 @@ const PlayQuiz = ({ params: { id } }: PlayQuizProps) => {
 
 	const userId = sessionClaims?.userId as string;
 
-	return <Screens userId={userId} roomId={id} />;
+	return <Screens userId={userId} quizId={id} />;
 };
 
 export default PlayQuiz;

@@ -4,17 +4,17 @@ import { useState, useEffect, useContext } from "react";
 
 type useSocketsParams = {
 	userId: string;
-	roomId: string;
+	quizId: string;
 };
 
-const useSockets = ({ userId, roomId }: useSocketsParams) => {
+const useSockets = ({ userId, quizId }: useSocketsParams) => {
 	const { socket } = useContext(SocketsContext);
 
 	const [player, setPlayer] = useState("");
 	const [players, setPlayers] = useState([]);
 
 	const startQuiz = async () => {
-		await setQuizActiveStatus({ userId, quizId: roomId, isActive: true });
+		await setQuizActiveStatus({ userId, quizId, isActive: true });
 	};
 
 	useEffect(() => {
@@ -29,7 +29,7 @@ const useSockets = ({ userId, roomId }: useSocketsParams) => {
 
 	useEffect(() => {
 		if (player) {
-			socket.emit("add_player", { roomId, player });
+			socket.emit("add_player", { quizId, name: player });
 		}
 	}, [player]);
 

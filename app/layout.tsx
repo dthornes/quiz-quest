@@ -1,13 +1,18 @@
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 
 import "./globals.css";
+import "./animation.css";
 
-const poppins = Poppins({
+type LayoutProps = {
+	children: React.ReactNode;
+};
+
+const montserrat = Montserrat({
 	subsets: ["latin"],
 	weight: ["400", "500", "600", "700"],
-	variable: "--font-poppins",
+	variable: "--font-montserrat",
 });
 
 export const metadata: Metadata = {
@@ -18,15 +23,11 @@ export const metadata: Metadata = {
 	},
 };
 
-export default function RootLayout({
-	children,
-}: {
-	children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: LayoutProps) {
 	return (
 		<ClerkProvider>
 			<html lang="en">
-				<body className={poppins.variable}>{children}</body>
+				<body className={montserrat.variable}>{children}</body>
 			</html>
 		</ClerkProvider>
 	);

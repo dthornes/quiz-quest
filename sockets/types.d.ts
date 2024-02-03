@@ -1,5 +1,6 @@
 export interface ServerToClientEvents {
 	screen: (data: string) => void;
+	player_list: (data: string) => void;
 	start_quiz: () => void;
 	set_question: (questionIndex: number) => void;
 }

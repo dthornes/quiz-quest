@@ -11,15 +11,15 @@ type JoiningProps = {
 	player: string;
 	setPlayer: React.Dispatch<React.SetStateAction<string>>;
 	players: string[];
-	roomId: string;
+	quizId: string;
 };
 
-const Joining = ({ player, setPlayer, players, roomId }: JoiningProps) => {
+const Joining = ({ player, setPlayer, players, quizId }: JoiningProps) => {
 	const { socket } = useContext(SocketsContext);
 	const [playerName, setPlayerName] = useState("");
 
 	const confirmPlayers = () => {
-		socket.emit("confirm_players", { roomId });
+		socket.emit("confirm_players", { quizId });
 	};
 
 	return (

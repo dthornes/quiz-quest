@@ -6,7 +6,10 @@ import { createServer } from "http";
 import cors from "cors";
 import { ClientToServerEvents, ServerToClientEvents } from "./types";
 
-import { getOrCreatePlayer } from "@/lib/actions/player.actions";
+import {
+	getAllPlayersForQuiz,
+	getOrCreatePlayer,
+} from "@/lib/actions/player.actions";
 
 const app = express();
 app.use(cors());
@@ -23,15 +26,16 @@ io.on("connection", (socket) => {
 	console.log("A player connected:", socket.id);
 
 	socket.on("add_player", async ({ quizId, name }) => {
-		// TODO: get or create player
+		console.log(quizId, name);
 		const player = await getOrCreatePlayer({ quizId, name });
 
 		socket.join(player.quizId);
 
-		console.log(`Player ${player} has joined room ${quizId}`);
+		console.log(`Player ${player.name} has joined room ${quizId}`);
 
-		// TODO: query all players and show here
-		// io.emit("player_list", Object.values(connectedPlayers));
+		const players = await getAllPlayersForQuiz(quizId);
+
+		io.emit("player_list", players);
 	});
 
 	socket.on("confirm_players", ({ quizId }) => {
@@ -44,8 +48,7 @@ io.on("connection", (socket) => {
 	});
 
 	socket.on("get_question", ({ quizId, activeQuestion }) => {
-		console.log(activeQuestion + 1);
-		// TODO: Handle active questions bettert
+		// TODO: Handle active questions better
 		io.to(quizId).emit("set_question", activeQuestion + 1);
 	});
 

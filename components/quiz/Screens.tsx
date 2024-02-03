@@ -10,14 +10,14 @@ import { IQuiz } from "@/lib/database/models/quiz.model";
 import Loader from "./Loader";
 
 type ScreensProps = {
-	roomId: string;
+	quizId: string;
 	userId: string;
 };
 
 type CurrentSreen = "loading" | "joining" | "quiz" | "leaderboard";
 
-const Screens = ({ userId, roomId }: ScreensProps) => {
-	const socket = useSockets({ userId, roomId });
+const Screens = ({ userId, quizId }: ScreensProps) => {
+	const socket = useSockets({ userId, quizId });
 	const [currentScreen, setCurrentScreen] = useState<CurrentSreen>("loading");
 	const [quiz, setQuiz] = useState<IQuiz | null>(null);
 
@@ -29,13 +29,13 @@ const Screens = ({ userId, roomId }: ScreensProps) => {
 
 	useEffect(() => {
 		const fetchQuiz = async () => {
-			const quiz = (await getQuizById(roomId)) as IQuiz;
+			const quiz = (await getQuizById(quizId)) as IQuiz;
 
 			setQuiz(quiz);
 		};
 
 		fetchQuiz();
-	}, [roomId]);
+	}, [quizId]);
 
 	useEffect(() => {
 		if (quiz) {
@@ -51,13 +51,13 @@ const Screens = ({ userId, roomId }: ScreensProps) => {
 
 	const screen = {
 		loading: <Loader />,
-		joining: <Joining {...socket} roomId={roomId} />,
+		joining: <Joining {...socket} quizId={quizId} />,
 		quiz: quiz && (
 			<Quiz
 				{...socket}
 				quizItems={quiz.quizItems}
 				userId={userId}
-				quizId={roomId}
+				quizId={quizId}
 			/>
 		),
 		leaderboard: <Leaderboard />,

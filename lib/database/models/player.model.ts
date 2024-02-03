@@ -2,7 +2,6 @@ import { Schema, model, models } from "mongoose";
 
 export interface IPlayer extends Document {
 	_id: string;
-	socketId: string;
 	quizId: string;
 	name: string;
 	quizAnswers: QuizAnswers;
@@ -20,7 +19,6 @@ const QuizAnswersSchema = new Schema({
 });
 
 const PlayerSchema = new Schema({
-	socketId: { type: String, required: true, unique: true },
 	quizId: { type: Schema.Types.ObjectId, ref: "Quiz" },
 	name: { type: String, required: true },
 	quizAnswers: { type: QuizAnswersSchema },

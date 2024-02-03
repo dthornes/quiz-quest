@@ -1,15 +1,17 @@
-import QuizCollection from "@/components/shared/QuizCollection";
-import { SearchParamProps } from "@/types";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
-export default async function Home({ searchParams }: SearchParamProps) {
+const Home = () => {
 	return (
-		<section
-			id="quizzes"
-			className="wrapper my-8 flex flex-col gap-8 md:gap-12"
-		>
-			<h2 className="h2-bold">Available Quizzes</h2>
-
-			<QuizCollection searchParams={searchParams} />
-		</section>
+		<div className="bg-white p-3 rounded-sm md:w-[300px]">
+			<Input
+				placeholder="Game PIN"
+				className="input-field flex-1"
+				// onChange={(e) => setPlayerName(e.target.value)}
+			/>
+			<Button className="w-full">Enter</Button>
+		</div>
 	);
-}
+};
+
+export default Home;

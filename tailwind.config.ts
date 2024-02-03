@@ -20,9 +20,9 @@ module.exports = withUt({
 		extend: {
 			colors: {
 				primary: {
-					500: "#fc8551",
+					500: "#f97316",
 					50: " #F6F8FD",
-					DEFAULT: "#fc8551",
+					DEFAULT: "#f97316",
 					foreground: "hsl(var(--primary-foreground))",
 				},
 				coral: {
@@ -67,7 +67,7 @@ module.exports = withUt({
 				},
 			},
 			fontFamily: {
-				poppins: ["var(--font-poppins)"],
+				montserrat: ["var(--font-montserrat)"],
 			},
 			backgroundImage: {
 				"dotted-pattern": "url('/assets/images/dotted-pattern.png')",

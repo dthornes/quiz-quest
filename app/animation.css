@@ -1,0 +1,17 @@
+@keyframes alignToTop {
+	from {
+		top: 50%;
+		transform: translateY(-50%);
+	}
+	to {
+		top: 0%;
+		transform: translateY(0%);
+	}
+}
+
+.animate-align-to-top {
+	top: 50%;
+	transform: translateY(-50%);
+	animation: alignToTop 1s cubic-bezier(0.25, 0, 0, 1) forwards;
+	animation-delay: 5s;
+}

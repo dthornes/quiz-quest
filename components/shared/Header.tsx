@@ -8,7 +8,7 @@ import WebsocketsConnection from "./WebsocketsConnection";
 
 const Header = () => {
 	return (
-		<header className="w-full border-b">
+		<header className="w-full border-b-4 border-b-slate-200">
 			<div className="wrapper flex items-center justify-between">
 				<Link href="/" className="w-36">
 					<Image
@@ -26,6 +26,7 @@ const Header = () => {
 				</SignedIn>
 
 				<div className="flex w-32 justify-end gap-3">
+					<WebsocketsConnection />
 					<SignedIn>
 						<UserButton afterSignOutUrl="/" />
 						<MobileNav />
@@ -35,7 +36,6 @@ const Header = () => {
 							<Link href="/sign-in">Login</Link>
 						</Button>
 					</SignedOut>
-					<WebsocketsConnection />
 				</div>
 			</div>
 		</header>
