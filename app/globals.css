@@ -133,7 +133,7 @@ body {
 
 	/* 24 */
 	.p-bold-24 {
-		@apply font-bold text-[24px] leading-[36px];
+		@apply font-bold text-[24px];
 	}
 
 	.p-medium-24 {

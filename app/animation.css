@@ -15,3 +15,16 @@
 	animation: alignToTop 1s cubic-bezier(0.25, 0, 0, 1) forwards;
 	animation-delay: 5s;
 }
+
+@keyframes moveUpDown {
+	0% {
+		transform: translateY(0);
+	}
+	100% {
+		transform: translateY(-10px);
+	}
+}
+
+.player-item {
+	animation-fill-mode: both;
+}

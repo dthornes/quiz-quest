@@ -35,7 +35,7 @@ const Joining = () => {
 				</div>
 			</div>
 
-			<Button>Start</Button>
+			<Button size="lg">Start</Button>
 		</div>
 	);
 };

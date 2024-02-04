@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 
 const Home = () => {
 	return (
-		<div className="bg-white p-3 rounded-sm md:w-[300px]">
+		<div className="bg-white p-3 rounded-sm md:w-[300px] m-auto">
 			<Input
 				placeholder="Game PIN"
 				className="input-field flex-1"

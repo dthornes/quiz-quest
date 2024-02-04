@@ -3,15 +3,6 @@
 import { useEffect, useState } from "react";
 import Graph from "@/components/shared/Graph";
 import Answer from "@/components/shared/Answer";
-import { blue, red, yellow, green } from "@/utils";
-
-// Force tailwind to load colour classes
-const colours = {
-	blue,
-	red,
-	yellow,
-	green,
-};
 
 const Question = () => {
 	const [showAnswers, setShowAnswers] = useState(false);
