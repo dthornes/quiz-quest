@@ -3,10 +3,13 @@ import { authMiddleware } from "@clerk/nextjs";
 export default authMiddleware({
 	publicRoutes: [
 		"/",
-		"/host/joining",
-		"/host/question",
-		"/host/scoreboard",
-		"/quiz/:id/play",
+		"/player/joining",
+		"/player/instructions",
+		"/player/start",
+		"/player/question",
+		"/player/result",
+		"/player/ranking",
+		"/quiz/:id/play", // TODO: Remove old routes
 		"/api/webhook/clerk",
 		"/api/uploadthing",
 	],

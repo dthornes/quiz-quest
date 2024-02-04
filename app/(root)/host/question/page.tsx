@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Graph from "@/components/shared/Graph";
 import Answer from "@/components/shared/Answer";
+import AnswersBlock from "@/components/shared/AnswersBlock";
 
 const Question = () => {
 	const [showAnswers, setShowAnswers] = useState(false);
@@ -57,32 +58,10 @@ const Question = () => {
 						{timer === 0 && <Graph />}
 					</div>
 
-					<div className="flex-1 px-3 pt-10 grid grid-cols-2 gap-3">
-						<Answer
-							selectedAnswer={selectedAnswer}
-							setSelectedAnswer={setSelectedAnswer}
-							colour="blue"
-							value="Answer 1"
-						/>
-						<Answer
-							selectedAnswer={selectedAnswer}
-							setSelectedAnswer={setSelectedAnswer}
-							colour="red"
-							value="Answer 2"
-						/>
-						<Answer
-							selectedAnswer={selectedAnswer}
-							setSelectedAnswer={setSelectedAnswer}
-							colour="yellow"
-							value="Answer 3"
-						/>
-						<Answer
-							selectedAnswer={selectedAnswer}
-							setSelectedAnswer={setSelectedAnswer}
-							colour="green"
-							value="Answer 4"
-						/>
-					</div>
+					<AnswersBlock
+						selectedAnswer={selectedAnswer}
+						setSelectedAnswer={setSelectedAnswer}
+					/>
 				</>
 			)}
 		</div>

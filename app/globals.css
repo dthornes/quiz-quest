@@ -283,3 +283,18 @@ body {
 .react-datepicker__time-list-item--selected {
 	background-color: #624cf5 !important;
 }
+
+/* ========================================== BG EFFECTS */
+.bg-sunburst {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	background: repeating-conic-gradient(
+		from 0deg,
+		rgba(255, 255, 255, 0.145) 0deg,
+		rgba(255, 255, 255, 0.145) 15deg,
+		transparent 15deg,
+		transparent 30deg
+	);
+	mask-image: radial-gradient(white, transparent 75%);
+}
