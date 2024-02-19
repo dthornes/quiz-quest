@@ -21,7 +21,7 @@ const QuizAnswersSchema = new Schema({
 const PlayerSchema = new Schema({
 	quizId: { type: Schema.Types.ObjectId, ref: "Quiz" },
 	name: { type: String, required: true },
-	quizAnswers: { type: QuizAnswersSchema },
+	quizAnswers: { type: [QuizAnswersSchema] },
 });
 
 const Player = models.Player || model("Player", PlayerSchema);

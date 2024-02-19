@@ -207,7 +207,7 @@ body {
 
 	/* SHADCN OVERRIDES */
 	.select-field {
-		@apply w-full bg-grey-50 h-[54px] placeholder:text-grey-500 rounded-full p-regular-16 px-5 py-3 border-transparent focus-visible:ring-transparent focus:ring-transparent !important;
+		@apply w-full bg-grey-50 h-[54px] placeholder:text-grey-500 rounded-sm p-regular-16 px-5 py-3 border-transparent focus-visible:ring-transparent focus:ring-transparent !important;
 	}
 
 	.input-field {
@@ -219,7 +219,7 @@ body {
 	}
 
 	.textarea {
-		@apply bg-grey-50 flex flex-1 placeholder:text-grey-500 p-regular-16 px-5 py-3 border-transparent focus-visible:ring-transparent !important;
+		@apply bg-grey-50 flex flex-1 placeholder:text-grey-500 p-regular-16 rounded-sm px-5 py-3 border-transparent focus-visible:ring-transparent !important;
 	}
 
 	.button {

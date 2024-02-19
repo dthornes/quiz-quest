@@ -17,4 +17,20 @@ export const quizFormSchema = z.object({
 	),
 });
 
+export const gamePinFormSchema = z.object({
+	gamePin: z
+		.string()
+		.min(6, "PIN must be 6 characters")
+		.max(6, "PIN must be 6 characters"),
+});
+
+export const nicknameFormSchema = z.object({
+	nickname: z
+		.string()
+		.min(3, "Nickname must be more than 3 characters")
+		.max(12, "Nickname cannot be more that 12 characters"),
+});
+
 export type QuizFormSchemaProps = z.infer<typeof quizFormSchema>;
+export type GamePinFormSchemaProps = z.infer<typeof gamePinFormSchema>;
+export type NicknameFormSchemaProps = z.infer<typeof nicknameFormSchema>;

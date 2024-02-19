@@ -7,7 +7,7 @@ import Leaderboard from "@/components/quiz/Leaderboard";
 import { useEffect, useState } from "react";
 import { getQuizById } from "@/lib/actions/quiz.actions";
 import { IQuiz } from "@/lib/database/models/quiz.model";
-import Loader from "./Loader";
+import Loader from "../shared/Loader";
 
 type ScreensProps = {
 	quizId: string;

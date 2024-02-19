@@ -1,6 +1,6 @@
-import GamePinForm from "@/components/player/GamePinForm";
+import GamePinForm from "./GamePinForm";
 
-const Home = () => {
+const GamePin = () => {
 	return (
 		<div className="bg-white p-3 rounded-sm md:w-[300px] m-auto">
 			<GamePinForm />
@@ -8,4 +8,4 @@ const Home = () => {
 	);
 };
 
-export default Home;
+export default GamePin;

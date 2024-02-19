@@ -49,7 +49,7 @@ const GraphBar = ({ colour, icon }: GraphBarProps) => {
 
 const Graph = () => {
 	return (
-		<div className="flex gap-5 h-full items-end">
+		<div className="flex gap-5 h-full items-end mb-5">
 			<GraphBar colour="blue" icon="triangle" />
 			<GraphBar colour="red" icon="diamond" />
 			<GraphBar colour="yellow" icon="circle" />

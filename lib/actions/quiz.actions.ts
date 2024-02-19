@@ -38,6 +38,7 @@ export async function createQuiz({ userId, quiz, path }: CreateQuizParams) {
 
 	const newQuiz = await Quiz.create({
 		...quiz,
+		roomPin: Math.floor(100000 + Math.random() * 1000000),
 		category: quiz.categoryId,
 		createdBy: userId,
 		createdAt: Date.now(),
@@ -52,6 +53,16 @@ export async function getQuizById(quizId: string) {
 	await connectToDatabase();
 
 	const quiz = await populateEvent(Quiz.findById(quizId));
+
+	if (!quiz) throw new Error("Quiz not found");
+
+	return JSON.parse(JSON.stringify(quiz));
+}
+
+export async function getQuizByGamePin(gamePin: string) {
+	await connectToDatabase();
+
+	const quiz = await Quiz.findOne({ gamePin });
 
 	if (!quiz) throw new Error("Quiz not found");
 
@@ -169,4 +180,34 @@ export async function setQuizActiveStatus({
 	);
 
 	return JSON.parse(JSON.stringify(updatedQuiz.isActive));
+}
+
+export async function getActiveQuestionForQuiz(quizId: string) {
+	await connectToDatabase();
+
+	const quiz = (await Quiz.findById(quizId)) as IQuiz;
+	if (!quiz) throw new Error("Quiz question not found");
+
+	const activeIndex = quiz.quizItems.findIndex((item) => item.isActive);
+
+	if (activeIndex !== -1 && activeIndex < quiz.quizItems.length - 1) {
+		const nextItem = quiz.quizItems[activeIndex + 1];
+
+		const questionAndAnswers = {
+			question: nextItem.question,
+			answers: [nextItem.correctAnswer, ...nextItem.incorrectAnswers],
+		};
+
+		return JSON.parse(JSON.stringify(questionAndAnswers));
+	}
+
+	return JSON.parse(JSON.stringify("No active question found!"));
+}
+
+export async function getQuizGamePin(quizId: string) {
+	await connectToDatabase();
+
+	const quiz = await Quiz.findById(quizId).select("gamePin");
+
+	return JSON.parse(JSON.stringify(quiz.gamePin));
 }

@@ -3,7 +3,7 @@
 import { connectToDatabase } from "@/lib/database";
 import Player from "@/lib/database/models/player.model";
 import { CreatePlayerParams } from "@/types";
-import jwt from "jsonwebtoken";
+import Quiz from "../database/models/quiz.model";
 
 export async function getOrCreatePlayer(player: CreatePlayerParams) {
 	await connectToDatabase();
@@ -14,22 +14,15 @@ export async function getOrCreatePlayer(player: CreatePlayerParams) {
 		dbPlayer = await Player.create(player);
 	}
 
-	// LOGIN MIGHT WORK!!!
-	// const tokenData = dbPlayer;
-
-	// // Create a token with expiration of 1 day
-	// const token = await jwt.sign(tokenData, process.env.TOKEN_SECRET!, {
-	// 	expiresIn: "1d",
-	// });
-
-	// // Set the token as an HTTP-only cookie
-	// response.cookies.set("token", token, {
-	// 	httpOnly: true,
-	// });
-
-	// return response;
-
 	return JSON.parse(JSON.stringify(dbPlayer));
+}
+
+export async function getPlayerById(playerId: string) {
+	await connectToDatabase();
+
+	let player = await Player.findById(playerId);
+
+	return JSON.parse(JSON.stringify(player));
 }
 
 export async function getAllPlayersForQuiz(quizId: string) {
@@ -39,4 +32,39 @@ export async function getAllPlayersForQuiz(quizId: string) {
 	const names = players.map((player) => player.name);
 
 	return JSON.parse(JSON.stringify(names));
+}
+
+export async function storeAnswerToPlayer({
+	playerId,
+	question,
+	answer,
+}: {
+	playerId: string;
+	question: string;
+	answer: string;
+}) {
+	await connectToDatabase();
+
+	const quiz = await Quiz.findOne(
+		{ "quizItems.question": question },
+		{ "quizItems.$": 1 }
+	);
+
+	const isCorrect = quiz.quizItems[0].correctAnswer === answer;
+
+	const savedAnswer = await Player.findOneAndUpdate(
+		{ _id: playerId, "quizAnswers.question": question },
+		{ $set: { "quizAnswers.$.isCorrect": isCorrect } },
+		{ new: true }
+	);
+
+	if (!savedAnswer) {
+		await Player.findByIdAndUpdate(
+			playerId,
+			{ $push: { quizAnswers: { question, isCorrect } } },
+			{ new: true }
+		);
+	}
+
+	return JSON.parse(JSON.stringify({ isCorrect }));
 }

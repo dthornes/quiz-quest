@@ -84,6 +84,13 @@ export type Quiz = {
 	};
 };
 
+export type PlayerQuizQuestion = {
+	answers: string[];
+	_id: string;
+	question: string;
+	isActive: boolean;
+};
+
 // ====== CATEGORY PARAMS
 export type CreateCategoryParams = {
 	categoryName: string;

@@ -4,11 +4,13 @@ import { Dispatch, SetStateAction } from "react";
 import Answer from "./Answer";
 
 type AnswersBlockProps = {
+	answers: string[];
 	selectedAnswer?: string | null;
 	setSelectedAnswer?: Dispatch<SetStateAction<string | null>>;
 };
 
 const AnswersBlock = ({
+	answers,
 	selectedAnswer,
 	setSelectedAnswer,
 }: AnswersBlockProps) => {
@@ -18,25 +20,25 @@ const AnswersBlock = ({
 				selectedAnswer={selectedAnswer}
 				setSelectedAnswer={setSelectedAnswer}
 				colour="blue"
-				value="Answer 1"
+				value={answers[0]}
 			/>
 			<Answer
 				selectedAnswer={selectedAnswer}
 				setSelectedAnswer={setSelectedAnswer}
 				colour="red"
-				value="Answer 2"
+				value={answers[1]}
 			/>
 			<Answer
 				selectedAnswer={selectedAnswer}
 				setSelectedAnswer={setSelectedAnswer}
 				colour="yellow"
-				value="Answer 3"
+				value={answers[2]}
 			/>
 			<Answer
 				selectedAnswer={selectedAnswer}
 				setSelectedAnswer={setSelectedAnswer}
 				colour="green"
-				value="Answer 4"
+				value={answers[3]}
 			/>
 		</div>
 	);

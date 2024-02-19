@@ -1,8 +1,8 @@
-import Loader from "@/components/quiz/Loader";
+import Loader from "@/components/shared/Loader";
 import PlayerNameBanner from "@/components/shared/PlayerNameBanner";
 import React from "react";
 
-const Start = () => {
+const Loading = () => {
 	return (
 		<div className="m-auto text-center text-white">
 			<h1 className="h1-bold">Question 1</h1>
@@ -13,4 +13,4 @@ const Start = () => {
 	);
 };
 
-export default Start;
+export default Loading;

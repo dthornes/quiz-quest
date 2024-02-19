@@ -2,7 +2,7 @@ import { Document, Schema, model, models } from "mongoose";
 
 export interface IQuiz extends Document {
 	_id: string;
-	roomCode: string;
+	gamePin: string;
 	title: string;
 	description?: string;
 	imageUrl: string;
@@ -18,19 +18,21 @@ export type QuizQuestions = {
 	question: string;
 	correctAnswer: string;
 	incorrectAnswers: string[];
+	isActive: boolean;
 };
 
 const quizItemSchema = new Schema({
 	question: { type: String, required: true },
 	correctAnswer: { type: String, required: true },
 	incorrectAnswers: { type: [String], required: true },
+	isActive: { type: Boolean, default: false },
 });
 
 const QuizSchema = new Schema({
-	roomCode: { type: String, required: true, unique: true },
+	gamePin: { type: String, required: true, unique: true },
 	title: { type: String, required: true },
 	description: { type: String },
-	imageUrl: { type: String, required: true },
+	imageUrl: { type: String },
 	category: { type: Schema.Types.ObjectId, ref: "Category" },
 	quizItems: { type: [quizItemSchema], required: true },
 	isActive: { type: Boolean, default: false },
