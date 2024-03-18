@@ -1,10 +1,10 @@
-import React from "react";
-import { FormControl, FormField, FormItem, FormMessage } from "../ui/form";
-import { Input } from "../ui/input";
-import { UseFormReturn, useFieldArray } from "react-hook-form";
-import { Button } from "../ui/button";
 import { getAPIQuestions } from "@/lib/actions/question.actions";
 import { QuizFormSchemaProps } from "@/lib/validator";
+import React from "react";
+import { UseFormReturn, useFieldArray } from "react-hook-form";
+import { Button } from "../ui/button";
+import { FormControl, FormField, FormItem, FormMessage } from "../ui/form";
+import { Input } from "../ui/input";
 
 type QuizQuestionsProps = {
 	form: UseFormReturn<QuizFormSchemaProps, any, undefined>;
@@ -43,7 +43,7 @@ const QuizQuestions = ({ form }: QuizQuestionsProps) => {
 					key={question.id}
 					className="p-3 rounded-lg border-slate-300 border-2"
 				>
-					<h2 className="mb-2">Question {index + 1}</h2>
+					<h2 className="text-lg font-bold mb-2">Question {index + 1}</h2>
 					<FormField
 						control={control}
 						name={`quizItems.${index}.question`}

@@ -1,7 +1,5 @@
 "use client";
 
-import React from "react";
-import { useRouter } from "next/navigation";
 import {
 	Form,
 	FormControl,
@@ -10,11 +8,12 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { getQuizByGamePin } from "@/lib/actions/quiz.actions";
 import { GamePinFormSchemaProps, gamePinFormSchema } from "@/lib/validator";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { Button } from "../ui/button";
-import { getQuizByGamePin } from "@/lib/actions/quiz.actions";
 
 const GamePinForm = () => {
 	const router = useRouter();
@@ -24,14 +23,18 @@ const GamePinForm = () => {
 	});
 
 	async function onSubmit(values: GamePinFormSchemaProps) {
-		const quiz = await getQuizByGamePin(values.gamePin);
+		try {
+			const quiz = await getQuizByGamePin(values.gamePin);
 
-		if (!quiz) {
-			form.setError("gamePin", { message: "Incorrect game pin!" });
-			return;
+			if (!quiz) {
+				form.setError("gamePin", { message: "Incorrect game pin!" });
+				return;
+			}
+
+			router.push(`/player/${quiz._id}`);
+		} catch {
+			form.setError("gamePin", { message: "Error connecting to quiz!" });
 		}
-
-		router.push(`/player/${quiz._id}`);
 	}
 
 	return (
@@ -50,7 +53,7 @@ const GamePinForm = () => {
 									type="number"
 								/>
 							</FormControl>
-							<FormMessage />
+							<FormMessage className="pb-2" />
 						</FormItem>
 					)}
 				/>

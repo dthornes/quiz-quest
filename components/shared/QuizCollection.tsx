@@ -1,9 +1,8 @@
-import React from "react";
-import Collection from "./Collection";
 import { getAllQuizzes } from "@/lib/actions/quiz.actions";
 import { SearchCollectionProps } from "@/types";
-import Search from "./Search";
 import CategoryFilter from "./CategoryFilter";
+import Collection from "./Collection";
+import Search from "./Search";
 
 const QuizCollection = async ({ searchParams }: SearchCollectionProps) => {
 	const page = Number(searchParams?.page) || 1;
@@ -26,7 +25,6 @@ const QuizCollection = async ({ searchParams }: SearchCollectionProps) => {
 			<Collection
 				data={quizzes?.data}
 				emptyTitle="No Quizzes Found"
-				emptyStateSubtext="Come back later"
 				limit={6}
 				page={page}
 				totalPages={quizzes?.totalPages}

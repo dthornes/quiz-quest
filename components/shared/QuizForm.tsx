@@ -1,31 +1,29 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
 	Form,
 	FormControl,
-	FormDescription,
 	FormField,
 	FormItem,
-	FormLabel,
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { QuizFormSchemaProps, quizFormSchema } from "@/lib/validator";
-import { quizDefaultValues } from "@/constants";
-import Dropdown from "./Dropdown";
 import { Textarea } from "@/components/ui/textarea";
-import { FileUploader } from "./FileUploader";
-import { useState } from "react";
-import Image from "next/image";
+import { quizDefaultValues } from "@/constants";
 import { useUploadThing } from "@/lib/uploadthing";
+import { QuizFormSchemaProps, quizFormSchema } from "@/lib/validator";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import Dropdown from "./Dropdown";
+import { FileUploader } from "./FileUploader";
 
-import "react-datepicker/dist/react-datepicker.css";
-import { useRouter } from "next/navigation";
+import useError from "@/hooks/useError";
 import { createQuiz, updateQuiz } from "@/lib/actions/quiz.actions";
 import { IQuiz } from "@/lib/database/models/quiz.model";
+import { useRouter } from "next/navigation";
+import "react-datepicker/dist/react-datepicker.css";
 import QuizQuestions from "./QuizQuestions";
 
 type QuizFormProps = {
@@ -36,6 +34,8 @@ type QuizFormProps = {
 };
 
 const QuizForm = ({ userId, type, quiz, quizId }: QuizFormProps) => {
+	const { setErrorMessage, errorMessageBlock } = useError();
+
 	const [files, setFiles] = useState<File[]>([]);
 	const initialValues = quiz && type === "Update" ? quiz : quizDefaultValues;
 	const router = useRouter();
@@ -72,8 +72,9 @@ const QuizForm = ({ userId, type, quiz, quizId }: QuizFormProps) => {
 					form.reset();
 					router.push(`/quiz/${newQuiz._id}`);
 				}
-			} catch (error) {
-				console.log(error);
+			} catch (error: any) {
+				window.scrollTo(0, 0);
+				setErrorMessage(error.message);
 			}
 		}
 
@@ -94,14 +95,16 @@ const QuizForm = ({ userId, type, quiz, quizId }: QuizFormProps) => {
 					form.reset();
 					router.push(`/quiz/${updatedQuiz._id}`);
 				}
-			} catch (error) {
-				console.log(error);
+			} catch (error: any) {
+				window.scrollTo(0, 0);
+				setErrorMessage(error.message);
 			}
 		}
 	}
 
 	return (
 		<Form {...form}>
+			{errorMessageBlock()}
 			<form
 				onSubmit={form.handleSubmit(onSubmit)}
 				className="flex flex-col gap-5"
